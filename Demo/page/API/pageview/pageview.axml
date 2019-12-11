@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="page-section">
+    <button type="primary" onTap="pageview">
+      pageview - 打开页面
+    </button>
+    <button type="primary" onTap="pageviewAndPageName">
+      pageview - 打开页面并添加别名
+    </button>
+    <button type="primary" onTap="pageviewAndProperty">
+      pageview - 打开页面并添加页面属性
+    </button>
+  </view>
+</view>

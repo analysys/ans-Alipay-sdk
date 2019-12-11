@@ -1,0 +1,92 @@
+.banner {
+  height: 455rpx;
+  width: 100%;
+  background-image: url('/image/component_bg.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 2;
+}
+
+
+.title {
+  font-size: 46rpx;
+  color: #fff;
+  position: absolute;
+  top: 260rpx;
+  left: 50%;
+  font-weight: bold;
+  transform: translate(-50%);
+  white-space: nowrap;
+}
+
+.sub-title {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 24rpx;
+  position: absolute;
+  top: 330rpx;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.fake-searchbar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  height: 92rpx;
+  width: 91.4%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 4rpx;
+  box-shadow: rgba(153, 153, 153, 0.24) 0 2px 7px;
+}
+
+.fake-placeholder {
+  margin-left: 12rpx;
+  color: rgba(153, 153, 153, 0.89);
+  font-size: 28rpx;
+}
+
+.component-name {
+  color: #333;
+  margin-right: 10rpx;
+}
+
+.list {
+  padding: 32rpx;
+}
+
+.list-header {
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+  font-size: 34rpx;
+  padding-left: 32rpx;
+}
+
+.am-list-header {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.am-list-body::before {
+  display: none;
+}
+
+.list-item {
+  margin-bottom: 35rpx;
+}
+
+.am-list-item {
+  padding-right: 15px;
+}
+
+.am-list-line {
+  padding-right: 0;
+}

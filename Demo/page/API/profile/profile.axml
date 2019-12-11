@@ -1,0 +1,32 @@
+<view class="page">
+  <view class="page-section">
+    
+    <button type="primary" onTap="profileSetOnce">
+      profileSetOnce - 设置用户单个固有属性
+    </button>
+    <button type="primary" onTap="profileSetOnceMore">
+      profileSetOnce - 设置用户多个固有属性
+    </button>
+    <button type="primary" onTap="profileSet">
+      profileSet - 设置单个用户属性
+    </button>
+     <button type="primary" onTap="profileSetMore">
+      profileSet - 设置多个用户属性
+    </button>
+    <button type="primary" onTap="profileIncrement">
+      profileIncrement - 设置用户属性单个相对变化值
+    </button>
+    <button type="primary" onTap="profileIncrementMore">
+      profileIncrement - 设置用户属性多个相对变化值
+    </button>
+    <button type="primary" onTap="profileAppend">
+      profileAppend - 增加列表类型的属性
+    </button>
+    <button type="primary" onTap="profileUnset">
+      profileUnset - 删除单个设置的属性值
+    </button>
+    <button type="primary" onTap="profileDelete">
+      profileDelete - 删除所有设置的属性值
+    </button>
+  </view>
+</view>

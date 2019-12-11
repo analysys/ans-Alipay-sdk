@@ -1,0 +1,8 @@
+<view class="page">
+  <view class="page-section">
+    <view>请在App中的onShow中调用该接口，以确保数据更为准确</view>
+    <button type="primary" onTap="appStart">
+      appStart - 启动
+    </button>
+  </view>
+</view>
