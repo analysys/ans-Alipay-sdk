@@ -11,7 +11,7 @@ import fieldTemplateBase from '../../configure/base/fieldTemplate'
 let plugList = [];
 
 // 字段表的合并
-let fieldTemplate = fieldTemplateBase;
+let fieldTemplate = fieldTemplateBase || {};
 for (var i = 0; i < plugList.length; i++) {
     fieldTemplate = Util.objMerge(fieldTemplateBase, plugList[i])
 }
@@ -35,7 +35,7 @@ for (var key in fieldTemplate) {
 
 eventTemp['commonTemp'] = commonTemp
 
-function temp(eventName) {
+function temp (eventName) {
     return eventTemp[eventName] || eventTemp.commonTemp
 }
 

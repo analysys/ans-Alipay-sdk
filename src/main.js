@@ -1,15 +1,8 @@
 import baseConfig from './lib/baseConfig/index';
 import Util from './lib/common/index';
-import {
-    errorLog,
-    successLog
-} from './lib/printLog/index';
-import {
-    resetCode
-} from './lib/fillFiled/index';
-import {
-    API
-} from './API/index';
+import { errorLog, successLog } from './lib/printLog/index';
+import { resetCode } from './lib/fillFiled/index';
+import { API } from './API/index';
 
 import PublicApp from './lib/common/publicApp.js'
 let getPublicApp = PublicApp.getPublicApp
@@ -21,7 +14,7 @@ class Ark_PASS_SDK extends API {
     constructor() {
         super()
     }
-    set appkey(key) {
+    set appkey (key) {
         resetCode();
         baseConfig.status.FnName = "appkey";
         baseConfig.status.successCode = "20002";
@@ -32,17 +25,17 @@ class Ark_PASS_SDK extends API {
         successLog();
         baseConfig.base.appid = key;
     }
-    get appkey() {
+    get appkey () {
         return baseConfig.base.appid;
     }
-    set debugMode(debug) {
+    set debugMode (debug) {
         resetCode();
         baseConfig.base.$debug = debug;
     }
-    get debugMode() {
+    get debugMode () {
         return baseConfig.base.$debug;
     }
-    set uploadURL(ServerUrl) {
+    set uploadURL (ServerUrl) {
         resetCode();
         if (!ServerUrl) {
             baseConfig.status.errorCode = "60007";
@@ -64,10 +57,10 @@ class Ark_PASS_SDK extends API {
         baseConfig.status.value = ServerUrl;
         successLog();
     }
-    get uploadURL() {
+    get uploadURL () {
         return baseConfig.base.uploadURL;
     }
-    set autoProfile(autoPro) {
+    set autoProfile (autoPro) {
         resetCode();
         if (Util.paramType(autoPro) !== 'Boolean') {
             baseConfig.status.key = "autoProfile";
@@ -78,10 +71,10 @@ class Ark_PASS_SDK extends API {
         }
         baseConfig.base.autoProfile = autoPro;
     }
-    get autoProfile() {
+    get autoProfile () {
         return baseConfig.base.autoProfile;
     }
-    set encryptType(encryptType) {
+    set encryptType (encryptType) {
         resetCode();
         if (Util.paramType(encryptType) !== "Number") {
             baseConfig.status.key = "encryptType";
@@ -92,10 +85,10 @@ class Ark_PASS_SDK extends API {
         }
         baseConfig.base.encryptType = encryptType;
     }
-    get encryptType() {
+    get encryptType () {
         return baseConfig.base.encryptType;
     }
-    set autoShare(shareStatus) {
+    set autoShare (shareStatus) {
         resetCode();
         if (Util.paramType(shareStatus) !== "Boolean") {
             baseConfig.status.key = "autoShare";
@@ -106,10 +99,10 @@ class Ark_PASS_SDK extends API {
         }
         baseConfig.base.autoShare = shareStatus;
     }
-    get autoShare() {
+    get autoShare () {
         return baseConfig.base.autoShare;
     }
-    set allowTimeCheck(Flag) {
+    set allowTimeCheck (Flag) {
         resetCode();
         if (Util.paramType(Flag) !== "Boolean") {
             baseConfig.status.key = "allowTimeCheck";
@@ -120,10 +113,10 @@ class Ark_PASS_SDK extends API {
         }
         baseConfig.base.allowTimeCheck = Flag;
     }
-    get allowTimeCheck() {
+    get allowTimeCheck () {
         return baseConfig.base.allowTimeCheck;
     }
-    set maxDiffTimeInterval(time) {
+    set maxDiffTimeInterval (time) {
         resetCode();
         if (Util.paramType(time) !== "Number") {
             baseConfig.status.key = "maxDiffTimeInterval";
@@ -134,7 +127,7 @@ class Ark_PASS_SDK extends API {
         }
         baseConfig.base.maxDiffTimeInterval = time;
     }
-    get allowTimeCheck() {
+    get allowTimeCheck () {
         return baseConfig.base.maxDiffTimeInterval;
     }
 }

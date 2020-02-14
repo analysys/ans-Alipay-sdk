@@ -22,7 +22,7 @@ function getSuperProperty(superPropertyName) {
         baseConfig.status.value = superProperty
         baseConfig.status.key = superPropertyName
         successLog();
-        return superProperty
+        return superProperty;
     }
     // if (Util.paramType(superProperty) == "String" && superProperty.length > 0) {
     //     baseConfig.status.successCode = '20010'
@@ -34,7 +34,7 @@ function getSuperProperty(superPropertyName) {
     baseConfig.status.successCode = "20009"
     baseConfig.status.key = superPropertyName
     successLog()
-    return ''
+    return ""
 }
 export {
     getSuperProperty

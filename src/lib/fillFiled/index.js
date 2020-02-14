@@ -5,7 +5,7 @@ import checkRule from '../checkField/index.js'
 import fieldRules from '../../configure/base/fieldRules'
 import storage from '../../lib/storage/index'
 
-function check(value, checkList) {
+function check (value, checkList) {
     for (var i = 0; i < checkList.length; i++) {
         var checkStatus = checkRule[checkList[i]](value)
         if (!checkStatus) {
@@ -14,7 +14,7 @@ function check(value, checkList) {
     }
     return true
 }
-function checkFields(key, value, rule) {
+function checkFields (key, value, rule) {
     var checkRule = rule.check
     var status = true
     if (!checkRule) {
@@ -44,8 +44,10 @@ function checkFields(key, value, rule) {
                     if (Util.paramType(value[i]) !== 'String') {
                         baseConfig.status.errorCode = "600013"
                     }
+                    if (value[i].length > 500) {
+                        value[i] = Util.stringSlice(value[i], 499) + '$'
+                    }
                     baseConfig.status.code = 400;
-
                     errorLog();
                 }
             }
@@ -63,7 +65,7 @@ function checkFields(key, value, rule) {
     }
     return status
 }
-function fillField(feilds, rules) {
+function fillField (feilds, rules) {
     // 添加场景值   能返回场景值 $referrer 和 $scene 都用场景值，假如拿不到场景值 $referrrer 用 path;
     // try {
     //     let scene = await scenePromise();
@@ -144,7 +146,7 @@ function fillField(feilds, rules) {
 }
 
 
-function resetCode() {
+function resetCode () {
     baseConfig.status = {
         "code": 200,
         "FnName": baseConfig.status.FnName,
@@ -155,7 +157,7 @@ function resetCode() {
     }
 }
 
-function clearCache(resetStatus) {
+function clearCache (resetStatus) {
     resetStatus = resetStatus || false
     if (!resetStatus) {
         var config = baseConfig.base
@@ -194,7 +196,7 @@ function clearCache(resetStatus) {
 }
 
 
-function checkBase() {
+function checkBase () {
     for (var key in baseConfig.base) {
         resetCode()
         // baseConfig.status.FnName = 'AnalysysAgentInit'
@@ -217,8 +219,7 @@ function checkBase() {
     return true
 }
 
-
-function checkPrivate(obj, ruleName, isKey, keyName) {
+function checkPrivate (obj, ruleName, isKey, keyName) {
     resetCode()
     var rule = fieldRules[ruleName] || fieldRules.xcontextCommonRule
     if (Util.paramType(obj) !== 'Object' || isKey == true) {
@@ -246,6 +247,10 @@ function checkPrivate(obj, ruleName, isKey, keyName) {
         }
         for (var key in obj) {
             var status = checkFields(key, obj[key], rule);
+            // 循环 obj,假如包含关键字，把关键字的值，全部回复成默认初始值。
+            if (key == "$lib" || key == "$lib_version" || key == "$platform") {
+                obj[key] = baseConfig.base[key];
+            };
             if (!status) {
                 if (baseConfig.status.errorCode === '600019') {
                     if (obj[key].length > 500) {

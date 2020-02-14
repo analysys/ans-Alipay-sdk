@@ -1,13 +1,9 @@
-import babel from 'rollup-plugin-babel';
-import eslint from 'rollup-plugin-eslint';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import {
-    uglify
-} from 'rollup-plugin-uglify'
-import {
-    terser
-} from "rollup-plugin-terser";
+import babel from 'rollup-plugin-babel'
+import eslint from 'rollup-plugin-eslint'
+import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
+import { uglify } from 'rollup-plugin-uglify'
+import { terser } from 'rollup-plugin-terser'
 
 export default [{
     input: './src/configure/base/encrypt.js',
@@ -22,7 +18,7 @@ export default [{
                 }
             })]
         }, {
-            file: './Demo/util/sdk/AnalysysAgent_encryption.min.js',
+            file: './alipayDemo/util/sdk/AnalysysAgent_encryption.min.js',
             format: 'cjs',
             name: 'Ans',
             plugins: [uglify({
@@ -31,7 +27,7 @@ export default [{
                 }
             })]
         }, {
-            file: './taroDemo/src/sdk/AnalysysAgent_encryption.min.js',
+            file: './testFrame(taro)/src/sdk/AnalysysAgent_encryption.min.js',
             format: 'cjs',
             name: 'Ans',
             plugins: [uglify({
@@ -49,7 +45,25 @@ export default [{
                 }
             })]
         }, {
-            file: './Demo/util/sdk/AnalysysAgent_encryption.es6.min.js',
+            file: './alipayDemo/util/sdk/AnalysysAgent_encryption.es6.min.js',
+            format: 'esm',
+            name: 'Ans',
+            plugins: [terser({
+                'mangle': {
+                    toplevel: true
+                }
+            })]
+        }, {
+            file: './test/util/sdk/AnalysysAgent_encryption.min.js',
+            format: 'cjs',
+            name: 'Ans',
+            plugins: [uglify({
+                'mangle': {
+                    toplevel: true
+                }
+            })]
+        }, {
+            file: './test/util/sdk/AnalysysAgent_encryption.es6.min.js',
             format: 'esm',
             name: 'Ans',
             plugins: [terser({

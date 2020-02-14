@@ -3,10 +3,10 @@ import baseConfig from '../baseConfig/index'
 
 class Util {
     constructor() { }
-    paramType(str) {
+    paramType (str) {
         return Object.prototype.toString.call(str).replace('[object ', '').replace(']', '')
     }
-    delEmpty(obj) {
+    delEmpty (obj) {
         let newObj = this.deepClone(obj)
         if (this.paramType(newObj) === "Object") {
             Object.keys(newObj).forEach((key) => {
@@ -26,14 +26,14 @@ class Util {
         }
         return newObj
     }
-    deepClone(obj) {
+    deepClone (obj) {
         let proto = Object.getPrototypeOf(obj);
         return Object.assign({}, Object.create(proto), obj);
     }
-    mergeMsg(obj, msg) {
+    mergeMsg (obj, msg) {
         Object.assign(msg, obj)
     }
-    checkObj(key, value) {
+    checkObj (key, value) {
         let obj = {}
         if (arguments.length === 1 && key.constructor === Array) {
             for (let i = 0; i < key.length; i++) {
@@ -52,7 +52,7 @@ class Util {
         }
         return obj
     }
-    isFristDay() {
+    isFristDay () {
         let date = new Date()
         let year = date.getFullYear()
         let month = date.getMonth() + 1
@@ -69,21 +69,20 @@ class Util {
         }
         return true
     }
-    isFristTime() {
+    isFristTime () {
         let fristTime = storage.getLocal("FRISTIME") !== false ? true : false
-        console.log(fristTime)
         if (fristTime) {
             storage.setLocal("FRISTIME", false)
         }
         return fristTime
     }
-    isEmptyObject(obj) {
+    isEmptyObject (obj) {
         if (Object.keys(obj).length > 0) {
             return false;
         }
         return true;
     }
-    setFristDay() {
+    setFristDay () {
         if (this.paramType(storage.getLocal("FRISTDAY")) === 'Boolean') return
         let timeDay = this.format(new Date(), 'yyyyMMdd');
         if (baseConfig.base.allowTimeCheck && baseConfig.base.logflag) {
@@ -91,17 +90,17 @@ class Util {
         }
         storage.setLocal("FRISTDAY", timeDay);
     }
-    setFristTime() {
+    setFristTime () {
         if (this.paramType(storage.getLocal("FRISTIME")) === 'Boolean') return
         storage.setLocal("FRISTIME", true)
     }
-    delFristDay() {
+    delFristDay () {
         storage.removeLocal("FRISTDAY")
     }
-    delFristTime() {
+    delFristTime () {
         storage.removeLocal("FRISTIME")
     }
-    checkURL(URL) {
+    checkURL (URL) {
         let str = URL;
         //判断URL地址的正则表达式为:http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?
         //下面的代码中应用了转义字符"\"输出一个字符"/"
@@ -113,14 +112,14 @@ class Util {
             return false;
         }
     }
-    firstVisitTime() {
+    firstVisitTime () {
         let isfirstVisitTime = storage.getLocal("FIRSTVISITTIME") !== false ? true : false
         if (isfirstVisitTime) {
             storage.setLocal("FIRSTVISITTIME", false)
         }
         return isfirstVisitTime
     }
-    toDeepObj(param1, param2, level) {
+    toDeepObj (param1, param2, level) {
         var obj = {}
         if (this.paramType(param1) === 'String') {
             obj = this.keyValueToObje(param1, param2)
@@ -137,19 +136,19 @@ class Util {
         }
         return obj
     }
-    ArrayToObj(arr) {
+    ArrayToObj (arr) {
         var obj = {}
         for (var i = 0; i < arr.length; i++) {
             obj[arr[i]] = ''
         }
         return obj
     }
-    keyValueToObje(key, value) {
+    keyValueToObje (key, value) {
         var obj = {}
         obj[key] = value || ""
         return obj
     }
-    toObj(param1, param2, level) {
+    toObj (param1, param2, level) {
         var obj = {}
         if (this.paramType(param1) === 'String') {
             obj = this.keyValueToObje(param1, param2)
@@ -164,7 +163,7 @@ class Util {
         }
         return obj
     }
-    objMerge(parentObj, part) {
+    objMerge (parentObj, part) {
         if (this.paramType(parentObj) !== 'Object' || this.paramType(part) !== 'Object') {
             return parentObj
         }
@@ -183,7 +182,7 @@ class Util {
         }
         return obj
     }
-    arrayUnique(arr) {
+    arrayUnique (arr) {
         var tmpArr = [],
             hash = {}; //hash为hash表
         for (var i = 0; i < arr.length; i++) {
@@ -194,15 +193,15 @@ class Util {
         }
         return tmpArr
     }
-    arrayMerge(arr1, arr2) {
+    arrayMerge (arr1, arr2) {
         arr1.push.apply(arr1, arr2)
         return arr1
     }
-    arrayMergeUnique(arr1, arr2) {
+    arrayMergeUnique (arr1, arr2) {
         arr1.push.apply(arr1, arr2)
         return this.arrayUnique(arr1)
     }
-    format(date, format) {
+    format (date, format) {
         let offset_GMT = date.getTimezoneOffset();
         date = new Date(date.getTime() + offset_GMT * 60 * 1000 + 8 * 60 * 60 * 1000) //转换为东八区时间
         let o = {
@@ -223,10 +222,10 @@ class Util {
                         ("00" + o[k]).substr(("" + o[k]).length));
         return format;
     }
-    objHasKay(obj, key) {
+    objHasKay (obj, key) {
         return Object.prototype.hasOwnProperty.call(obj, key)
     }
-    clientTimeZone() {
+    clientTimeZone () {
         var munites = new Date().getTimezoneOffset();
         var hour = parseInt(munites / 60);
         var munite = munites % 60;
@@ -248,12 +247,12 @@ class Util {
         }
         return prefix + hour + ':' + munite;
     }
-    objInArray(obj) {
+    objInArray (obj) {
         let objArray = [];
         objArray.push(obj);
         return objArray;
     }
-    stringSlice(str, length) {
+    stringSlice (str, length) {
         return str.slice(0, length);
     }
 }

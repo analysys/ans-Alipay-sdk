@@ -6,22 +6,22 @@ import baseConfig from '../baseConfig/index.js'
 
 class CheckField {
     constructor() { }
-    isString(val) {
+    isString (val) {
         baseConfig.status.errorCode = "60001"
         return Util.paramType(val) === 'String'
     }
-    isNumber(val) {
+    isNumber (val) {
         baseConfig.status.errorCode = "60002"
         return Util.paramType(val) === 'Number'
     }
-    isBoolean(val) {
+    isBoolean (val) {
         baseConfig.status.errorCode = "60003"
         return Util.paramType(val) === 'Boolean'
     }
-    isObject(val) {
+    isObject (val) {
         return Util.paramType(val) === 'Object'
     }
-    lengthRule(val, min, max) {
+    lengthRule (val, min, max) {
         if (!this.isNumber(max)) {
             max = Infinity
         }
@@ -32,24 +32,24 @@ class CheckField {
         }
         return status
     }
-    nimLength(val) {
+    nimLength (val) {
         return this.lengthRule(val, 0)
     }
-    length99(val) {
+    length99 (val) {
         var lengthStatus = this.lengthRule(val, 0, 99)
         if (!lengthStatus) {
             baseConfig.status.errorCode = "600010"
         }
         return lengthStatus
     }
-    length125(val) {
+    length125 (val) {
         var lengthStatus = this.lengthRule(val, 0, 125)
         if (!lengthStatus) {
             baseConfig.status.errorCode = "60009"
         }
         return lengthStatus
     }
-    length255(val) {
+    length255 (val) {
         if (!val && !this.isString(val) && !this.isNumber(val) && !this.isBoolean(val)) {
             baseConfig.status.errorCode = "60005"
             return false
@@ -63,14 +63,14 @@ class CheckField {
         }
         return lengthStatus
     }
-    keyLength255(val) {
+    keyLength255 (val) {
         var lengthStatus = this.length255(val)
         if (!lengthStatus) {
             baseConfig.status.errorCode = "600017"
         }
         return lengthStatus
     }
-    isURL(URL) {
+    isURL (URL) {
         var str = URL;
         //判断URL地址的正则表达式为:http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?
         //下面的代码中应用了转义字符"\"输出一个字符"/"
@@ -83,16 +83,16 @@ class CheckField {
             return false;
         }
     }
-    isDebug(val) {
+    isDebug (val) {
         if (this.isNumber(val) && (val === 0 || val === 1 || val === 2)) {
             return true
         }
         return false
     }
-    notObject(val) {
+    notObject (val) {
         return !this.isObject(val)
     }
-    notSpecialCharacters(val) {
+    notSpecialCharacters (val) {
         var patrn = new RegExp("[\\u4E00-\\u9FA5]|[\\uFE30-\\uFFA0]", "gi");
         var reg = /^[$a-zA-Z][a-zA-Z0-9_$]{0,}$/
         if (patrn.test(val) || !reg.test(val)) {
@@ -101,7 +101,7 @@ class CheckField {
         }
         return true;
     }
-    isArrayString(val) {
+    isArrayString (val) {
         if (Util.paramType(val) === 'Array') {
             for (var i = 0; i < val.length; i++) {
                 baseConfig.status.value = val[i]
@@ -116,8 +116,9 @@ class CheckField {
         }
         return true;
     }
-    keywords(val) {
-        var key = baseConfig.keywords
+    keywords (val) {
+        var key = baseConfig.keywords;
+        baseConfig.status.errorCode = "600012";
         return key.indexOf(val) > -1 ? false : true
     }
 }

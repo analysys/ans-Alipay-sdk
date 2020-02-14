@@ -11,7 +11,7 @@ import { getLanguage } from '../../lib/fillFiled/getField'
 
 
 // 此方法为 不暴露 API ，功能只是在掉 多次上报的API 时 合并 一起上报
-function setFirstProfile(type) {
+function setFirstProfile (type) {
 
     // 假如开启时间校准 和 符合时间校准的条件 第一次的时间应该是校验过的时间
     let time = Util.format(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS');
@@ -27,21 +27,22 @@ function setFirstProfile(type) {
     let auto = baseConfig.base.auto;
     // if (type == "startUp" || type == "appStart") {
     // startUp 除了 profileSetOnce 还有 pageView
-    if (autoProfile === true && type !== "alias") {
-        var ARKFRISTPROFILE = storage.getLocal('ARKFRISTPROFILESEND') || false;
-        if (ARKFRISTPROFILE == false) {
-            storage.setLocal('ARKFRISTPROFILESEND', true);
-            baseConfig.status.FnName = "$profile_set_once";
-            resetCode();
-            let profileSetOnceTemp = temp('$profile_set_once');
-            let res = fillField(profileSetOnceTemp);
-            res = Util.delEmpty(res);
-            res.xcontext = Util.objMerge(res.xcontext, setOnce);
-            let ARKPOST = storage.getLocal("POSTDATA");
-            ARKPOST = [...ARKPOST, ...Util.objInArray(res)]
-            storage.setLocal("POSTDATA", ARKPOST);
+    if (type == "startUp") {
+        if (autoProfile === true) {
+            var ARKFRISTPROFILE = storage.getLocal('ARKFRISTPROFILESEND') || false;
+            if (ARKFRISTPROFILE == false) {
+                storage.setLocal('ARKFRISTPROFILESEND', true);
+                baseConfig.status.FnName = "$profile_set_once";
+                resetCode();
+                let profileSetOnceTemp = temp('$profile_set_once');
+                let res = fillField(profileSetOnceTemp);
+                res = Util.delEmpty(res);
+                res.xcontext = Util.objMerge(res.xcontext, setOnce);
+                let ARKPOST = storage.getLocal("POSTDATA");
+                ARKPOST = [...ARKPOST, ...Util.objInArray(res)]
+                storage.setLocal("POSTDATA", ARKPOST);
+            }
         }
-        // }
         if (auto === true) {
             pageView();
         } else {
