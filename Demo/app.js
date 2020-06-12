@@ -7,21 +7,25 @@ AnalysysAgent.uploadURL = 'https://arkpaastest.analysys.cn:4089'
 AnalysysAgent.encryptType = 1
 AnalysysAgent.autoShare = true
 AnalysysAgent.allowTimeCheck = true
-App({
-  onLaunch(options) {
+AnalysysAgent.autoTrack = true
 
-  },
-  onLoad(){},
-  onShow(options) {
-    this.globalData.StartUpOption = options
-    AnalysysAgent.identify('z123123', true)
-    
-    AnalysysAgent.appStart(options)
-  },
-  onHide() {
-    console.log('App Hide');
-  },
-  globalData: {
-    hasLogin: false,
-  },
+AnalysysAgent.identify('z123123', true)
+
+App({
+    onLaunch (options) {
+
+    },
+    onLoad () { },
+    onShow (options) {
+        this.globalData.StartUpOption = options
+    },
+    onHide () {
+        console.log('App Hide');
+    },
+    a(x,y,z){
+
+    },
+    globalData: {
+        hasLogin: false,
+    },
 });
