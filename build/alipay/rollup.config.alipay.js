@@ -19,7 +19,7 @@ function changePath () {
                 .replace(/\@Router/g, pathResolve('../../src/ProgramDiff/Ali/router'))
                 .replace(/\$ANS/g, 'ALP')
                 .replace(/\$LIB/g, 'Alipay')
-                .replace(/\$LibVERSION/, '4.3.2')
+                .replace(/\$LibVERSION/, '4.3.3')
             return {
                 code: code,
                 id: id
