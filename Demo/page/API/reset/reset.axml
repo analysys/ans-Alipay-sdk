@@ -1,7 +1,0 @@
-<view class="page">
-  <view class="page-section">
-    <button type="primary" onTap="reset">
-      reset - 清除本地设置
-    </button>
-  </view>
-</view>

@@ -1,0 +1,43 @@
+<!-- index.wxml -->
+<view class="container">
+  
+    <view class="header">
+        <button onTap="nextPage" data-id="{{999}}" data-type="{{123}}" data-content="dddd" hover-class="buttonHove">下一页</button>
+        <button id="demo-box-API" class="API">合法参数的API(超级属性系列)</button>
+        <button onTap="registerSuperProperty" hover-class="buttonHove">
+            registerSuperProperty
+        </button>
+        <button onTap="registerSuperProperties" hover-class="buttonHove">
+            registerSuperProperties
+        </button>
+        <button onTap="unRegisterSuperProperty" hover-class="buttonHove">
+            unRegisterSuperProperty
+        </button>
+        <button onTap="getSuperProperty" hover-class="buttonHove">getSuperProperty</button>
+        <button onTap="getSuperProperties" hover-class="buttonHove">getSuperProperties</button>
+        <button onTap="clearSuperProperties" hover-class="buttonHove">
+            clearSuperProperties
+        </button>
+
+        <button  id="demo-box-API" class="API">合法参数的API(profole系列)</button>
+        <button onTap="profileSet" hover-class="buttonHove">profileSet</button>
+        <button onTap="profileSetOnce" hover-class="buttonHove">profileSetOnce</button>
+        <button onTap="profileIncrement" hover-class="buttonHove">profileIncrement</button>
+        <button onTap="profileAppend" hover-class="buttonHove">profileAppend 单个属性</button>
+        <button onTap="profileAppendObject" hover-class="buttonHove">profileAppend 多个属性集合</button>
+        <button onTap="profileAppendArray" hover-class="buttonHove">profileAppend 列表类型属性</button>
+        <button onTap="profileUnset" hover-class="buttonHove">profileUnset</button>
+        <button onTap="profileDelete" hover-class="buttonHove">profileDelete</button>
+   
+        <button  id="demo-box-API" class="API">合法参数的API(其他)</button>
+        <button onTap="getPresetProperties" hover-class="buttonHove">getPresetProperties</button>
+        <button onTap="pageView" hover-class="buttonHove">pageView</button>
+        <button onTap="alias" hover-class="buttonHove">alias</button>
+        <button onTap="track" hover-class="buttonHove">track</button>
+        <button onTap="identify" hover-class="buttonHove">identify</button>
+        <button onTap="reset" hover-class="buttonHove">reset</button>
+        <button open-type="share" hover-class="buttonHove">share</button>
+        <button onTap="getDistinctId" hover-class="buttonHove">getDistinctId</button>
+    
+    </view>
+</view>
