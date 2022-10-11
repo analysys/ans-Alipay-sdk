@@ -2,7 +2,7 @@
 let AnalysysEncryption = require('../../dist/AnalysysAgent_encryption.min.js') //加密板块，目前与sdk分开，为了缩小sdk的体积。需要的话单独引入。
 AnalysysAgent.encrypt = AnalysysEncryption
 
-import AnalysysAgent from  '../../dist/AnalysysAgent_Alipay_SDK.es6.min.js';
+import AnalysysAgent from  '../../dist/AnalysysAgent_ChinaMobile_SDK.es6.min.js';
 
 AnalysysAgent.init({
   appkey: '2d01eb66efd95d2c',

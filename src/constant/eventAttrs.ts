@@ -41,8 +41,7 @@ export const events = {
   $startup: [
     ...utmAttrs,
     '$is_first_day',
-    '$is_first_time', //首次访问，只在startUp
-    '$scene'
+    '$is_first_time' //首次访问，只在startUp
   ],
   $end: [
     '$duration' //使用时长
@@ -51,7 +50,6 @@ export const events = {
     ...utmAttrs,
     '$is_first_day',
     '$referrer',
-    '$scene',
     '$startup_time', // 此行下面5个只在 pageView 中有
     '$url',
     '$url_domain',

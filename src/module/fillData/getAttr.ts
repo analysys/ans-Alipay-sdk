@@ -47,10 +47,10 @@ export default {
   },
 
   $screen_width (): number {
-    return system.screen.width
+    return system.screenWidth
   },
   $screen_height (): number {
-    return system.screen.height
+    return system.screenHeight
   },
   
   $os (): string {
@@ -123,9 +123,6 @@ export default {
   },
 
   // url 相关
-  $scene (): string {
-    return pathParams.scene.toString()
-  },
   $referrer (): string {
     return getReferer()
   },

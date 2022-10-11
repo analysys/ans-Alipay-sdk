@@ -11,20 +11,20 @@ interface screenValue {
 }
 
 interface systemValue {
-  brand: string;
+  brand?: string;
   model?: number;
   pixelRatio?: number;
-  screenWidth: number;
-  screenHeight: number;
-  language: string;
-  version: string;
-  system: string;
-  screen: screenValue;
-  platform: string;
-  fontSizeSetting: string;
-  SDKVersion: string;
+  screenWidth?: number;
+  screenHeight?: number;
+  language?: string;
+  version?: string;
+  system?: string;
+  screen?: screenValue;
+  platform?: string;
+  fontSizeSetting?: string;
+  SDKVersion?: string;
   benchmarkLevel?: number;
-  deviceOrientation: string;
+  deviceOrientation?: string;
 }
 
 let system : systemValue
@@ -39,6 +39,10 @@ function setSystem(): Promise<object> {
       success(res) {
         system = res
         resolve(res)
+      },
+      fail() {
+        system = {}
+        resolve(system)
       }
     })
   })

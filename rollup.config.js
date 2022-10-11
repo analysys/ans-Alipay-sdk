@@ -65,11 +65,11 @@ function getPlugins () {
 export default [{
   input: './src/index.ts',
   output: [{
-    file: './dist/AnalysysAgent_Alipay_SDK.min.js',
+    file: './dist/AnalysysAgent_ChinaMobile_SDK.min.js',
     format: 'cjs',
     name: 'Ans'
   }, {
-    file: './dist/AnalysysAgent_Alipay_SDK.es6.min.js',
+    file: './dist/AnalysysAgent_ChinaMobile_SDK.es6.min.js',
     format: 'esm',
     name: 'Ans'
   }],
@@ -78,11 +78,11 @@ export default [{
 }, {
   input: './src/indexCustom.ts',
   output: [{
-    file: './dist/AnalysysAgent_Alipay_SDK.custom.min.js',
+    file: './dist/AnalysysAgent_ChinaMobile_SDK.custom.min.js',
     format: 'cjs',
     name: 'Ans'
   }, {
-    file: './dist/AnalysysAgent_Alipay_SDK.custom.es6.min.js',
+    file: './dist/AnalysysAgent_ChinaMobile_SDK.custom.es6.min.js',
     format: 'esm',
     name: 'Ans'
   }],
