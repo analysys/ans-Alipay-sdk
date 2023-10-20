@@ -4,13 +4,15 @@ import { optionsDefault } from '../constant'
 import { isBoolean, isNumber, isString } from '../utils/type'
 import { lengthCheck } from '../utils/verify'
 import { errorLog } from '../module/printLog'
+import { coreInit } from './core'
+import { implementAallbackArr } from '../module/ready'
 
 const configRule = {
   appkey: {
     verify: [lengthCheck]
   },
   uploadURL: {
-    verify: [isString]
+    verify: [lengthCheck]
   },
   debugMode: {
     verify: [isNumber]
@@ -58,6 +60,9 @@ const configRule = {
   }
 }
 
+// 是否完成初始化参数配置
+export let isInitConfig  = false
+
 export const config : initConfig = optionsDefault()
 
 export function setConfig (options: initConfig, isVerify = true) : Promise<object> {
@@ -81,13 +86,16 @@ export function setConfig (options: initConfig, isVerify = true) : Promise<objec
               key: o,
               code: 60002,
               value: value
-            })
+            }, true)
           } else {
             config[o] = value
           }
         }
       })
     }
+    coreInit()
+    isInitConfig = true
+    implementAallbackArr()
     resolve(config)
   })
 }

@@ -19,8 +19,11 @@ let doingList: Array<buriedPointData> = []
 // 当前重试次数
 let retryCount = 0
 
+// 回调函数
+const callbackFnMap = {}
+
 // 发送请求
-function postData (successFn?: () => void) : any {
+function postData () : any {
 
   // 待上报数据
   const todoList: Array<buriedPointData> = getPostData()
@@ -66,12 +69,19 @@ function postData (successFn?: () => void) : any {
     
     // 上报成功后删除队列与相应的缓存数据
     delPostData(doingList)
+
+    // 执行上报成功回调函数
+    doingList.forEach(o => {
+      if (callbackFnMap[o.xwhen]) {
+        callbackFnMap[o.xwhen]()
+        delete callbackFnMap[o.xwhen]
+      }
+    })
+
     doingList = []
 
     // 继续上报剩下的数据，如果有的话
     postData()
-
-    successFn && successFn()
 
     successLog({
       code: 20001
@@ -99,10 +109,28 @@ function postData (successFn?: () => void) : any {
 
 function sendData (data: buriedPointData, successFn?: () => void) : any {
 
+  if (!config.appkey) {
+    errorLog({
+      code: 60006
+    })
+    return
+  }
+
+  if (!config.uploadURL) {
+    errorLog({
+      code: 60007
+    })
+    return
+  }
+
   // 加入待上报队列
   addPostData(data)
 
-  postData(successFn)
+  postData()
+
+  if (isFunction(successFn)) {
+    callbackFnMap[data.xwhen] = successFn
+  }
 }
 
 export default sendData

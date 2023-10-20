@@ -3,9 +3,13 @@ import sendData from '../sendData'
 import fillData from '../fillData'
 import { isObject } from '../../utils/type'
 import { getSuperProperty } from '../../store/core'
+import { getPageProperty } from '../../store/pageProperty'
 import { setUserClickAttrs } from '../../store/clickElement'
+import { config } from '../../store/config'
 
 function userClick(...args: any[]) {
+
+  if (!config.autoTrack) return
 
   if (args.length > 0 && args[0] && isObject(args[0]) && (args[0].type == "tap" || args[0].type == "longtap" || args[0].type == "longpress")) {
     let element_function = args[1]
@@ -28,7 +32,7 @@ function userClick(...args: any[]) {
     const res = fillData('$user_click')
 
     // 合并通用属性
-    res.xcontext = Object.assign({}, res.xcontext, getSuperProperty())
+    res.xcontext = Object.assign({}, res.xcontext, getSuperProperty(), getPageProperty())
 
     sendData(res)
   }
@@ -41,6 +45,8 @@ export default userClick
  */
 export function userClickTab(tabItem) {
 
+  if (!config.autoTrack) return
+
   setUserClickAttrs({
     function: 'onTabItemTap',
     name: tabItem.text
@@ -50,7 +56,7 @@ export function userClickTab(tabItem) {
   const res = fillData('$user_click')
 
   // 合并通用属性
-  res.xcontext = Object.assign({}, res.xcontext, getSuperProperty())
+  res.xcontext = Object.assign({}, res.xcontext, getSuperProperty(), getPageProperty())
 
   sendData(res)
 }

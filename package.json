@@ -1,6 +1,6 @@
 {
 	"name": "asd-alipay-sdk",
-	"version": "5.0.0",
+	"version": "5.0.1",
 	"description": "This is the offical Alipay SDK for Analysys.",
 	"main": "dist/AnalysysAgent_Alipay_SDK.min.js",
 	"module": "dist/AnalysysAgent_Alipay_SDK.es6.min.js",

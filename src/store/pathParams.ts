@@ -2,7 +2,7 @@
  * 路径相关参数信息存储
  */
 
- interface paramsValue {
+interface paramsValue {
   scene?: number;
 
   campaign_id?: string;

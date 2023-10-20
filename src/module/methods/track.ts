@@ -5,6 +5,8 @@ import fillData from '../fillData'
 import { getSuperProperty } from '../../store/core'
 import { attrCheck } from '../../utils/verify'
 import { errorLog } from '../printLog'
+import { eventAttribute } from '../../store/eventAttribute'
+import { getNow } from '../../store/time'
 
 function track (eventName : string, eventAttrs : object) {
 
@@ -18,10 +20,18 @@ function track (eventName : string, eventAttrs : object) {
   }
 
   // 获取上报数据模块
-  const res = fillData(eventName)
+  const res = fillData('track')
+
+  res.xwhat = eventName
 
   // 合并通用属性
   res.xcontext = Object.assign({}, res.xcontext, getSuperProperty(), attrCheck(eventAttrs, eventName))
+
+  // 增加使用时长属性
+  if (eventAttribute.timeEvent[eventName]) {
+    res.xcontext['$duration'] = getNow() - eventAttribute.timeEvent[eventName]
+    delete eventAttribute[eventName]
+  }
 
   sendData(res)
   

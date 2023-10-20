@@ -1,6 +1,6 @@
 
 import { PageHook } from '../../constant/hook'
-import { startUp, end, pageClose, pageView, share, userClick, userClickTab } from '../methods'
+import { startUp, end, pageClose, autoPageView, share, userClick, userClickTab } from '../methods'
 import { setPathParams } from '../../store/pathParams'
 import ready from '../ready'
 import { config } from '../../store/config'
@@ -37,68 +37,50 @@ export function appFnApply (obj, Fn, toFn) {
 
 export function hookMethods (methods) {
 
-  appFnApply(methods, 'onLoad', (query) => {
-    const page = getCurrentPage()
-    eventAttribute.pageview.query[page.$id] = query
-  })
-
   appFnApply(methods, 'onShow', ()=> {
-    
-    // 是否自动采集pageview事件
-    if (config.auto === true) {
-      const page = getCurrentPage()
+    // 自动采集pageView
+    ready(autoPageView)()
 
-      // 防止多次自动触发pageView事件
-      if (!eventAttribute.pageview.state[page.$id]) {
-        ready(pageView)()
-        eventAttribute.pageview.state[page.$id] = true
-      }
-    } else {
-      // 未自动采集时，记录页面浏览时间
-      eventAttribute.pageview.xwhen = getNow()
-    }
+    // 记录浏览页面时间
+    eventAttribute.pageview.xwhen = getNow()
   })
   
 
   // 监听页面离开
-  const statusClear = function (isOnUnload = false) {
-    const page = getCurrentPage()
-    if (eventAttribute.pageview.state[page.$id]) {
-      if (config.autoPageViewDuration) {
-        pageClose()
-      }
-      delete eventAttribute.pageview.state[page.$id]
-    }
-
-    if (isOnUnload) {
-      if (eventAttribute.pageview.query[page.$id]) {
-        delete eventAttribute.pageview.query[page.$id]
-      }
+  let statusClear = function () {
+    const self = getCurrentPage()
+    const pageId = self.__wxExparserNodeId__
+    if (eventAttribute.pageview.state[pageId]) {
+      delete eventAttribute.pageview.state[pageId]
     }
   }
-  
   appFnApply(methods, 'onHide', () => {
+    if (config.autoPageViewDuration) {
+      pageClose()
+    }
     statusClear()
   })
   appFnApply(methods, 'onUnload', () => {
-    statusClear(true)
+    if (config.autoPageViewDuration) {
+      pageClose()
+    }
+    statusClear()
   })
   
-
   if (config.autoShare == true) {
     appFnApply(methods, 'onShareAppMessage', share)
   }
 
-  if (config.autoTrack == true) {
-    for (const i in methods) {
-      const item = methods[i]
-      if (isFunction(item) && PageHook.indexOf(i) < 0) {
-        appFnApply(methods, i, userClick)
-      } else if(isFunction(item) && i == 'onTabItemTap') {
-        appFnApply(methods, i, userClickTab)
-      }
+  
+  for (const i in methods) {
+    const item = methods[i]
+    if (isFunction(item) && PageHook.indexOf(i) < 0) {
+      appFnApply(methods, i, userClick)
+    } else if(isFunction(item) && i == 'onTabItemTap') {
+      appFnApply(methods, i, userClickTab)
     }
   }
+  
 }
 
 
@@ -113,9 +95,9 @@ export function AppFn (app) {
   })
 
   // 自动上报启动事件
-  appFnApply(app, 'onShow', () => {
+  appFnApply(app, 'onShow', (...arg) => {
     if (!eventAttribute.startup.state) {
-      ready(startUp)()
+      ready(startUp)(...arg)
       eventAttribute.startup.state = true
     }
   })

@@ -5,11 +5,6 @@
 
 import { globalWindow } from '../constant/index'
 
-interface screenValue {
-  width: number;
-  height: number;
-}
-
 interface systemValue {
   brand: string;
   model?: number;
@@ -19,7 +14,6 @@ interface systemValue {
   language: string;
   version: string;
   system: string;
-  screen: screenValue;
   platform: string;
   fontSizeSetting: string;
   SDKVersion: string;

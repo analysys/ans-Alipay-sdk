@@ -7,7 +7,6 @@ import { system } from "../../store/system"
 import { getPath, getReferer } from '../../utils/path'
 import { pathParams } from '../../store/pathParams'
 import { clientTimeZone } from '../../utils/date'
-import { isString, isNumber } from "../../utils/type"
 import { valToString, valToNumber } from "../../utils/type/transform"
 import { dateFormat } from "../../utils/date"
 import { userClickAttrs } from "../../store/clickElement"
@@ -47,17 +46,18 @@ export default {
   },
 
   $screen_width (): number {
-    return system.screen.width
+    return system.screenWidth
   },
   $screen_height (): number {
-    return system.screen.height
+    return system.screenHeight
   },
   
   $os (): string {
-    return system.platform
+    const os = system.system
+    return os ? os.split(' ')[0] : ''
   },
   $browser (): string {
-    return '' 
+    return ''
   },
   $brand () : string {
     return system.brand
@@ -65,9 +65,8 @@ export default {
   $browser_version (): string {
     return system.version
   },
-  // 系统版本
   $os_version (): string {
-    return system.system
+    return system.system ? system.system.split(' ')[1] : ''
   },
   $model (): number {
     return system.model
@@ -89,23 +88,16 @@ export default {
 
    // 是否安装后首次访问
   $is_first_time () {
-    return !core.FRISTDAY
+    return !core.ARKFRISTPROFILE
   },
 
   // 是否安装后首日访问
   $is_first_day () {
-    if (!core.FRISTDAY) {
+    const datetime = core.ARKFRISTPROFILE
+    if (!datetime) {
       return true
     }
-    if (isString(core.FRISTDAY)) {
-      return dateFormat(new Date(getNow()), 'yyyyMMdd') === core.FRISTDAY
-    }
-
-    if (isNumber(core.FRISTDAY)) {
-      return dateFormat(new Date(getNow()), 'yyyyMMdd') === dateFormat(new Date(core.FRISTDAY), 'yyyyMMdd')
-    }
-
-    return false
+    return dateFormat(new Date(getNow()), 'yyyyMMdd') === dateFormat(new Date(datetime), 'yyyyMMdd')
   },
   $first_visit_time () {
     return core.ARKFRISTPROFILE

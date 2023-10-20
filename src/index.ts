@@ -3,17 +3,18 @@
  */
 
 import { initConfig } from './types'
-import { setConfig } from './store/config'
-import { globalWindow, optionsDefault } from './constant/index'
-import { coreInit } from './store/core'
-import ready from './module/ready'
-import { successLog } from './module/printLog/index'
+import { setConfig, config } from './store/config'
+import { setSystem } from './store/system'
+import { globalWindow, $lib_version } from './constant/index'
+import ready, { implementAallbackArr } from './module/ready'
+import { successLog, errorMessage } from './module/printLog/index'
 import {
   pageView,
   profileSetOnce, profileSet, profileAppend, profileIncrement, profileDelete, profileUnset,
   reset,
   share,
   track,
+  timeEvent,
   alias,
   registerSuperProperty, registerSuperProperties, getSuperProperty, getSuperProperties,
   unRegisterSuperProperty,
@@ -24,37 +25,45 @@ import {
   pageProperty
 } from './module/methods/index'
 import autoTrigger from './module/autoTrigger'
+import { setNetwork } from './store/network'
+import { getServerTime } from './store/time'
 
 
 class ArkWxSdk {
   constructor () {
-    coreInit()
+    Promise.all([setNetwork(), getServerTime(), setSystem()]).then(() => {
+      implementAallbackArr()
+    })
   }
-  config: initConfig = optionsDefault();
+  version: string = $lib_version;
+  config: initConfig = config;
   pageView = ready(pageView);
-  share = share;
-  registerSuperProperty = registerSuperProperty;
-  registerSuperProperties = registerSuperProperties;
-  getSuperProperty = getSuperProperty;
-  getSuperProperties = getSuperProperties;
-  unRegisterSuperProperty = unRegisterSuperProperty;
-  clearSuperProperties = clearSuperProperties;
-  profileSetOnce = profileSetOnce;
-  profileSet = profileSet;
-  profileAppend = profileAppend;
-  profileIncrement = profileIncrement;
-  profileDelete = profileDelete;
-  profileUnset = profileUnset;
-  reset = reset;
-  track = track;
-  alias = alias;
-  getPresetProperties = getPresetProperties;
-  identify = identify;
-  getDistinctId = getDistinctId;
-  pageProperty = pageProperty;
+  share = ready(share);
+  registerSuperProperty = ready(registerSuperProperty, true);
+  registerSuperProperties = ready(registerSuperProperties, true);
+  getSuperProperty = ready(getSuperProperty);
+  getSuperProperties = ready(getSuperProperties);
+  unRegisterSuperProperty = ready(unRegisterSuperProperty);
+  clearSuperProperties = ready(clearSuperProperties);
+  profileSetOnce = ready(profileSetOnce);
+  profileSet = ready(profileSet);
+  profileAppend = ready(profileAppend);
+  profileIncrement = ready(profileIncrement);
+  profileDelete = ready(profileDelete);
+  profileUnset = ready(profileUnset);
+  reset = ready(reset);
+  track = ready(track);
+  timeEvent = timeEvent;
+  alias = ready(alias, true);
+  getPresetProperties = ready(getPresetProperties);
+  identify = ready(identify, true);
+  getDistinctId = ready(getDistinctId);
+  pageProperty = ready(pageProperty);
 
   // 初始化传入配置
   init (config: initConfig) {
+    if (!config.appkey) throw new Error(errorMessage['60006']) 
+    if (!config.uploadURL) throw new Error(errorMessage['60007'])
     setConfig(config).then(o => {
       this.config = o
       successLog({
@@ -65,23 +74,14 @@ class ArkWxSdk {
 }
 
 // 初始化传入配置
-Object.keys(optionsDefault()).forEach(o => {
-  Object.defineProperty(ArkWxSdk.prototype, o, {
-    get: function get() {
-      return this.config[o];
-    },
-    set: function set(value) {
-      const _this = this;
-      setConfig({
-        [o]: value
-      }).then(function (o) {
-         _this.config = o;
-      })
-    },
-    enumerable: false,
-    configurable: true
-  })
+Object.defineProperty(ArkWxSdk.prototype, 'appkey', {
+  set: function set() {
+    throw new Error('请使用init方法初始化sdk') 
+  },
+  enumerable: false,
+  configurable: true
 })
+
 const ArkSdk = new ArkWxSdk()
 globalWindow.AnalysysAgent = ArkSdk
 

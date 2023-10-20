@@ -1,20 +1,33 @@
 //app.js
-let AnalysysEncryption = require('../../dist/AnalysysAgent_encryption.min.js') //加密板块，目前与sdk分开，为了缩小sdk的体积。需要的话单独引入。
-AnalysysAgent.encrypt = AnalysysEncryption
+// let AnalysysEncryption = require('../../dist/AnalysysAgent_encryption.min.js') //加密板块，目前与sdk分开，为了缩小sdk的体积。需要的话单独引入。
+// AnalysysAgent.encrypt = AnalysysEncryption
 
-import AnalysysAgent from  '../../dist/AnalysysAgent_Alipay_SDK.es6.min.js';
+import AnalysysAgent from  './dist/AnalysysAgent_Alipay_SDK.es6.min.js';
 
+
+
+setTimeout(()=> {
+
+
+
+AnalysysAgent.identify('111111')
+AnalysysAgent.alias('aaaa')
 AnalysysAgent.init({
   appkey: '2d01eb66efd95d2c',
   uploadURL: 'https://uba-up.analysysdata.com',
   debugMode: 2,
+  auto: true,
   $appname: 'test_appname',
   encryptType: 1,
   $appid: 'test_app_id',
   autoPageViewDuration: true,
   autoShare: false,
-  autoTrack: true
+  autoTrack: true,
 })
+
+
+
+}, 2000)
 
 AnalysysAgent.onReady = function(config) {
   console.log('sdk已准备就绪')
@@ -28,6 +41,7 @@ AnalysysAgent.onAfterStartUp = function (res) {
   console.log('预制启动事件发送成功')
   console.log(res)
 }
+
 
 App({
   onLaunch: function(options) {

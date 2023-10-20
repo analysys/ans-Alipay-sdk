@@ -11,5 +11,8 @@ export const eventAttribute = {
       
     },
     query: {} // 记录当前页面的url参数
-  }
+  },
+
+  // 记录自定义时间持续时长
+  timeEvent: {}
 }
